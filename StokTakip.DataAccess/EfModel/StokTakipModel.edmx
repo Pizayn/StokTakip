@@ -1,0 +1,685 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StokTakipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Atik">
+          <Key>
+            <PropertyRef Name="AtikId" />
+          </Key>
+          <Property Name="AtikId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrunId" Type="int" Nullable="false" />
+          <Property Name="MarkaId" Type="int" Nullable="false" />
+          <Property Name="Aciklama" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bolum">
+          <Key>
+            <PropertyRef Name="BolumId" />
+          </Key>
+          <Property Name="BolumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BolumAdi" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kisi">
+          <Key>
+            <PropertyRef Name="KisiId" />
+          </Key>
+          <Property Name="KisiId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Isim" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SoyIsim" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Marka">
+          <Key>
+            <PropertyRef Name="MarkaId" />
+          </Key>
+          <Property Name="MarkaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MarkaAdi" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="PersonalId" />
+          </Key>
+          <Property Name="PersonalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyadi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="KisiId" Type="bigint" Nullable="false" />
+          <Property Name="BolumId" Type="int" Nullable="false" />
+          <Property Name="Sifre" Type="int" Nullable="false" />
+          <Property Name="Mail" Type="varchar" MaxLength="320" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="UrunId" />
+          </Key>
+          <Property Name="UrunId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrunAdi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UrunAded" Type="int" Nullable="false" />
+          <Property Name="MarkaId" Type="int" Nullable="false" />
+          <Property Name="StokDurum" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Yonetici">
+          <Key>
+            <PropertyRef Name="YoneticiId" />
+          </Key>
+          <Property Name="YoneticiId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyadi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="KisiId" Type="bigint" Nullable="false" />
+          <Property Name="BolumId" Type="int" Nullable="false" />
+          <Property Name="Sifre" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zimmet">
+          <Key>
+            <PropertyRef Name="ZimmetId" />
+          </Key>
+          <Property Name="ZimmetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ZimmetAded" Type="int" Nullable="false" />
+          <Property Name="ZimmetDurumu" Type="int" Nullable="false" />
+          <Property Name="UrunId" Type="int" Nullable="false" />
+          <Property Name="MarkaId" Type="int" Nullable="false" />
+          <Property Name="PersonalId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Atik_Marka">
+          <End Role="Marka" Type="Self.Marka" Multiplicity="1" />
+          <End Role="Atik" Type="Self.Atik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marka">
+              <PropertyRef Name="MarkaId" />
+            </Principal>
+            <Dependent Role="Atik">
+              <PropertyRef Name="MarkaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Atik_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="Atik" Type="Self.Atik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="UrunId" />
+            </Principal>
+            <Dependent Role="Atik">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personal_Bolum">
+          <End Role="Bolum" Type="Self.Bolum" Multiplicity="1" />
+          <End Role="Personal" Type="Self.Personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bolum">
+              <PropertyRef Name="BolumId" />
+            </Principal>
+            <Dependent Role="Personal">
+              <PropertyRef Name="BolumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personal_Kisi">
+          <End Role="Kisi" Type="Self.Kisi" Multiplicity="1" />
+          <End Role="Personal" Type="Self.Personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kisi">
+              <PropertyRef Name="KisiId" />
+            </Principal>
+            <Dependent Role="Personal">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Urun_Marka">
+          <End Role="Marka" Type="Self.Marka" Multiplicity="1" />
+          <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marka">
+              <PropertyRef Name="MarkaId" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="MarkaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yonetici_Bolum">
+          <End Role="Bolum" Type="Self.Bolum" Multiplicity="1" />
+          <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bolum">
+              <PropertyRef Name="BolumId" />
+            </Principal>
+            <Dependent Role="Yonetici">
+              <PropertyRef Name="BolumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yonetici_Kisi">
+          <End Role="Kisi" Type="Self.Kisi" Multiplicity="1" />
+          <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kisi">
+              <PropertyRef Name="KisiId" />
+            </Principal>
+            <Dependent Role="Yonetici">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zimmet_Marka">
+          <End Role="Marka" Type="Self.Marka" Multiplicity="1" />
+          <End Role="Zimmet" Type="Self.Zimmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marka">
+              <PropertyRef Name="MarkaId" />
+            </Principal>
+            <Dependent Role="Zimmet">
+              <PropertyRef Name="MarkaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zimmet_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
+          <End Role="Zimmet" Type="Self.Zimmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="PersonalId" />
+            </Principal>
+            <Dependent Role="Zimmet">
+              <PropertyRef Name="PersonalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zimmet_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="Zimmet" Type="Self.Zimmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="UrunId" />
+            </Principal>
+            <Dependent Role="Zimmet">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StokTakipModelStoreContainer">
+          <EntitySet Name="Atik" EntityType="Self.Atik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bolum" EntityType="Self.Bolum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kisi" EntityType="Self.Kisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marka" EntityType="Self.Marka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Urun" EntityType="Self.Urun" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yonetici" EntityType="Self.Yonetici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zimmet" EntityType="Self.Zimmet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Atik_Marka" Association="Self.FK_Atik_Marka">
+            <End Role="Marka" EntitySet="Marka" />
+            <End Role="Atik" EntitySet="Atik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Atik_Urun" Association="Self.FK_Atik_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Atik" EntitySet="Atik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personal_Bolum" Association="Self.FK_Personal_Bolum">
+            <End Role="Bolum" EntitySet="Bolum" />
+            <End Role="Personal" EntitySet="Personal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personal_Kisi" Association="Self.FK_Personal_Kisi">
+            <End Role="Kisi" EntitySet="Kisi" />
+            <End Role="Personal" EntitySet="Personal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Urun_Marka" Association="Self.FK_Urun_Marka">
+            <End Role="Marka" EntitySet="Marka" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yonetici_Bolum" Association="Self.FK_Yonetici_Bolum">
+            <End Role="Bolum" EntitySet="Bolum" />
+            <End Role="Yonetici" EntitySet="Yonetici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yonetici_Kisi" Association="Self.FK_Yonetici_Kisi">
+            <End Role="Kisi" EntitySet="Kisi" />
+            <End Role="Yonetici" EntitySet="Yonetici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zimmet_Marka" Association="Self.FK_Zimmet_Marka">
+            <End Role="Marka" EntitySet="Marka" />
+            <End Role="Zimmet" EntitySet="Zimmet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zimmet_Personal" Association="Self.FK_Zimmet_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="Zimmet" EntitySet="Zimmet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zimmet_Urun" Association="Self.FK_Zimmet_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Zimmet" EntitySet="Zimmet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StokTakipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Atik">
+          <Key>
+            <PropertyRef Name="AtikId" />
+          </Key>
+          <Property Name="AtikId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrunId" Type="Int32" Nullable="false" />
+          <Property Name="MarkaId" Type="Int32" Nullable="false" />
+          <Property Name="Aciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Marka" Relationship="Self.FK_Atik_Marka" FromRole="Atik" ToRole="Marka" />
+          <NavigationProperty Name="Urun" Relationship="Self.FK_Atik_Urun" FromRole="Atik" ToRole="Urun" />
+          <NavigationProperty Name="Zimmet" Relationship="Self.FK_Zimmet_Atik" FromRole="Atik" ToRole="Zimmet" />
+        </EntityType>
+        <EntityType Name="Bolum">
+          <Key>
+            <PropertyRef Name="BolumId" />
+          </Key>
+          <Property Name="BolumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BolumAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Personal" Relationship="Self.FK_Personal_Bolum" FromRole="Bolum" ToRole="Personal" />
+          <NavigationProperty Name="Yonetici" Relationship="Self.FK_Yonetici_Bolum" FromRole="Bolum" ToRole="Yonetici" />
+        </EntityType>
+        <EntityType Name="Kisi">
+          <Key>
+            <PropertyRef Name="KisiId" />
+          </Key>
+          <Property Name="KisiId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isim" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SoyIsim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Personal" Relationship="Self.FK_Personal_Kisi" FromRole="Kisi" ToRole="Personal" />
+          <NavigationProperty Name="Yonetici" Relationship="Self.FK_Yonetici_Kisi" FromRole="Kisi" ToRole="Yonetici" />
+        </EntityType>
+        <EntityType Name="Marka">
+          <Key>
+            <PropertyRef Name="MarkaId" />
+          </Key>
+          <Property Name="MarkaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarkaAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Atik" Relationship="Self.FK_Atik_Marka" FromRole="Marka" ToRole="Atik" />
+          <NavigationProperty Name="Urun" Relationship="Self.FK_Urun_Marka" FromRole="Marka" ToRole="Urun" />
+          <NavigationProperty Name="Zimmet" Relationship="Self.FK_Zimmet_Marka" FromRole="Marka" ToRole="Zimmet" />
+        </EntityType>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="PersonalId" />
+          </Key>
+          <Property Name="PersonalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="KisiId" Type="Int64" Nullable="false" />
+          <Property Name="BolumId" Type="Int32" Nullable="false" />
+          <Property Name="Sifre" Type="Int32" Nullable="false" />
+          <Property Name="Mail" Type="String" MaxLength="320" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bolum" Relationship="Self.FK_Personal_Bolum" FromRole="Personal" ToRole="Bolum" />
+          <NavigationProperty Name="Kisi" Relationship="Self.FK_Personal_Kisi" FromRole="Personal" ToRole="Kisi" />
+          <NavigationProperty Name="Zimmet" Relationship="Self.FK_Zimmet_Personal" FromRole="Personal" ToRole="Zimmet" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="UrunId" />
+          </Key>
+          <Property Name="UrunId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrunAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UrunAded" Type="Int32" Nullable="false" />
+          <Property Name="MarkaId" Type="Int32" Nullable="false" />
+          <Property Name="StokDurum" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Atik" Relationship="Self.FK_Atik_Urun" FromRole="Urun" ToRole="Atik" />
+          <NavigationProperty Name="Marka" Relationship="Self.FK_Urun_Marka" FromRole="Urun" ToRole="Marka" />
+          <NavigationProperty Name="Zimmet" Relationship="Self.FK_Zimmet_Urun" FromRole="Urun" ToRole="Zimmet" />
+        </EntityType>
+        <EntityType Name="Yonetici">
+          <Key>
+            <PropertyRef Name="YoneticiId" />
+          </Key>
+          <Property Name="YoneticiId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="KisiId" Type="Int64" Nullable="false" />
+          <Property Name="BolumId" Type="Int32" Nullable="false" />
+          <Property Name="Sifre" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bolum" Relationship="Self.FK_Yonetici_Bolum" FromRole="Yonetici" ToRole="Bolum" />
+          <NavigationProperty Name="Kisi" Relationship="Self.FK_Yonetici_Kisi" FromRole="Yonetici" ToRole="Kisi" />
+        </EntityType>
+        <EntityType Name="Zimmet">
+          <Key>
+            <PropertyRef Name="ZimmetId" />
+          </Key>
+          <Property Name="ZimmetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ZimmetAded" Type="Int32" Nullable="false" />
+          <Property Name="ZimmetDurumu" Type="Int32" Nullable="false" />
+          <Property Name="UrunId" Type="Int32" Nullable="false" />
+          <Property Name="MarkaId" Type="Int32" Nullable="false" />
+          <Property Name="PersonalId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Atik" Relationship="Self.FK_Zimmet_Atik" FromRole="Zimmet" ToRole="Atik" />
+          <NavigationProperty Name="Marka" Relationship="Self.FK_Zimmet_Marka" FromRole="Zimmet" ToRole="Marka" />
+          <NavigationProperty Name="Personal" Relationship="Self.FK_Zimmet_Personal" FromRole="Zimmet" ToRole="Personal" />
+          <NavigationProperty Name="Urun" Relationship="Self.FK_Zimmet_Urun" FromRole="Zimmet" ToRole="Urun" />
+        </EntityType>
+        <Association Name="FK_Atik_Marka">
+          <End Role="Marka" Type="Self.Marka" Multiplicity="1" />
+          <End Role="Atik" Type="Self.Atik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marka">
+              <PropertyRef Name="MarkaId" />
+            </Principal>
+            <Dependent Role="Atik">
+              <PropertyRef Name="MarkaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Atik_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="Atik" Type="Self.Atik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="UrunId" />
+            </Principal>
+            <Dependent Role="Atik">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zimmet_Atik">
+          <End Role="Atik" Type="Self.Atik" Multiplicity="1" />
+          <End Role="Zimmet" Type="Self.Zimmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Atik">
+              <PropertyRef Name="AtikId" />
+            </Principal>
+            <Dependent Role="Zimmet">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personal_Bolum">
+          <End Role="Bolum" Type="Self.Bolum" Multiplicity="1" />
+          <End Role="Personal" Type="Self.Personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bolum">
+              <PropertyRef Name="BolumId" />
+            </Principal>
+            <Dependent Role="Personal">
+              <PropertyRef Name="BolumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yonetici_Bolum">
+          <End Role="Bolum" Type="Self.Bolum" Multiplicity="1" />
+          <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bolum">
+              <PropertyRef Name="BolumId" />
+            </Principal>
+            <Dependent Role="Yonetici">
+              <PropertyRef Name="BolumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personal_Kisi">
+          <End Role="Kisi" Type="Self.Kisi" Multiplicity="1" />
+          <End Role="Personal" Type="Self.Personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kisi">
+              <PropertyRef Name="KisiId" />
+            </Principal>
+            <Dependent Role="Personal">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yonetici_Kisi">
+          <End Role="Kisi" Type="Self.Kisi" Multiplicity="1" />
+          <End Role="Yonetici" Type="Self.Yonetici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kisi">
+              <PropertyRef Name="KisiId" />
+            </Principal>
+            <Dependent Role="Yonetici">
+              <PropertyRef Name="KisiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Urun_Marka">
+          <End Role="Marka" Type="Self.Marka" Multiplicity="1" />
+          <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marka">
+              <PropertyRef Name="MarkaId" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="MarkaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zimmet_Marka">
+          <End Role="Marka" Type="Self.Marka" Multiplicity="1" />
+          <End Role="Zimmet" Type="Self.Zimmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marka">
+              <PropertyRef Name="MarkaId" />
+            </Principal>
+            <Dependent Role="Zimmet">
+              <PropertyRef Name="MarkaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zimmet_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
+          <End Role="Zimmet" Type="Self.Zimmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="PersonalId" />
+            </Principal>
+            <Dependent Role="Zimmet">
+              <PropertyRef Name="PersonalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zimmet_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="1" />
+          <End Role="Zimmet" Type="Self.Zimmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="UrunId" />
+            </Principal>
+            <Dependent Role="Zimmet">
+              <PropertyRef Name="UrunId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StokTakipContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Atik" EntityType="Self.Atik" />
+          <EntitySet Name="Bolum" EntityType="Self.Bolum" />
+          <EntitySet Name="Kisi" EntityType="Self.Kisi" />
+          <EntitySet Name="Marka" EntityType="Self.Marka" />
+          <EntitySet Name="Personal" EntityType="Self.Personal" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Urun" EntityType="Self.Urun" />
+          <EntitySet Name="Yonetici" EntityType="Self.Yonetici" />
+          <EntitySet Name="Zimmet" EntityType="Self.Zimmet" />
+          <AssociationSet Name="FK_Atik_Marka" Association="Self.FK_Atik_Marka">
+            <End Role="Marka" EntitySet="Marka" />
+            <End Role="Atik" EntitySet="Atik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Atik_Urun" Association="Self.FK_Atik_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Atik" EntitySet="Atik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zimmet_Atik" Association="Self.FK_Zimmet_Atik">
+            <End Role="Atik" EntitySet="Atik" />
+            <End Role="Zimmet" EntitySet="Zimmet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personal_Bolum" Association="Self.FK_Personal_Bolum">
+            <End Role="Bolum" EntitySet="Bolum" />
+            <End Role="Personal" EntitySet="Personal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yonetici_Bolum" Association="Self.FK_Yonetici_Bolum">
+            <End Role="Bolum" EntitySet="Bolum" />
+            <End Role="Yonetici" EntitySet="Yonetici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personal_Kisi" Association="Self.FK_Personal_Kisi">
+            <End Role="Kisi" EntitySet="Kisi" />
+            <End Role="Personal" EntitySet="Personal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yonetici_Kisi" Association="Self.FK_Yonetici_Kisi">
+            <End Role="Kisi" EntitySet="Kisi" />
+            <End Role="Yonetici" EntitySet="Yonetici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Urun_Marka" Association="Self.FK_Urun_Marka">
+            <End Role="Marka" EntitySet="Marka" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zimmet_Marka" Association="Self.FK_Zimmet_Marka">
+            <End Role="Marka" EntitySet="Marka" />
+            <End Role="Zimmet" EntitySet="Zimmet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zimmet_Personal" Association="Self.FK_Zimmet_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="Zimmet" EntitySet="Zimmet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zimmet_Urun" Association="Self.FK_Zimmet_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Zimmet" EntitySet="Zimmet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StokTakipModelStoreContainer" CdmEntityContainer="StokTakipContext">
+          <EntitySetMapping Name="Atik">
+            <EntityTypeMapping TypeName="StokTakipModel.Atik">
+              <MappingFragment StoreEntitySet="Atik">
+                <ScalarProperty Name="AtikId" ColumnName="AtikId" />
+                <ScalarProperty Name="UrunId" ColumnName="UrunId" />
+                <ScalarProperty Name="MarkaId" ColumnName="MarkaId" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bolum">
+            <EntityTypeMapping TypeName="StokTakipModel.Bolum">
+              <MappingFragment StoreEntitySet="Bolum">
+                <ScalarProperty Name="BolumId" ColumnName="BolumId" />
+                <ScalarProperty Name="BolumAdi" ColumnName="BolumAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kisi">
+            <EntityTypeMapping TypeName="StokTakipModel.Kisi">
+              <MappingFragment StoreEntitySet="Kisi">
+                <ScalarProperty Name="KisiId" ColumnName="KisiId" />
+                <ScalarProperty Name="Isim" ColumnName="Isim" />
+                <ScalarProperty Name="SoyIsim" ColumnName="SoyIsim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marka">
+            <EntityTypeMapping TypeName="StokTakipModel.Marka">
+              <MappingFragment StoreEntitySet="Marka">
+                <ScalarProperty Name="MarkaId" ColumnName="MarkaId" />
+                <ScalarProperty Name="MarkaAdi" ColumnName="MarkaAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personal">
+            <EntityTypeMapping TypeName="StokTakipModel.Personal">
+              <MappingFragment StoreEntitySet="Personal">
+                <ScalarProperty Name="PersonalId" ColumnName="PersonalId" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+                <ScalarProperty Name="KisiId" ColumnName="KisiId" />
+                <ScalarProperty Name="BolumId" ColumnName="BolumId" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="StokTakipModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Urun">
+            <EntityTypeMapping TypeName="StokTakipModel.Urun">
+              <MappingFragment StoreEntitySet="Urun">
+                <ScalarProperty Name="UrunId" ColumnName="UrunId" />
+                <ScalarProperty Name="UrunAdi" ColumnName="UrunAdi" />
+                <ScalarProperty Name="UrunAded" ColumnName="UrunAded" />
+                <ScalarProperty Name="MarkaId" ColumnName="MarkaId" />
+                <ScalarProperty Name="StokDurum" ColumnName="StokDurum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yonetici">
+            <EntityTypeMapping TypeName="StokTakipModel.Yonetici">
+              <MappingFragment StoreEntitySet="Yonetici">
+                <ScalarProperty Name="YoneticiId" ColumnName="YoneticiId" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+                <ScalarProperty Name="KisiId" ColumnName="KisiId" />
+                <ScalarProperty Name="BolumId" ColumnName="BolumId" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zimmet">
+            <EntityTypeMapping TypeName="StokTakipModel.Zimmet">
+              <MappingFragment StoreEntitySet="Zimmet">
+                <ScalarProperty Name="ZimmetId" ColumnName="ZimmetId" />
+                <ScalarProperty Name="ZimmetAded" ColumnName="ZimmetAded" />
+                <ScalarProperty Name="ZimmetDurumu" ColumnName="ZimmetDurumu" />
+                <ScalarProperty Name="UrunId" ColumnName="UrunId" />
+                <ScalarProperty Name="MarkaId" ColumnName="MarkaId" />
+                <ScalarProperty Name="PersonalId" ColumnName="PersonalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
